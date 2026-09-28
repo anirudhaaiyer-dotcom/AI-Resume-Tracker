@@ -1,0 +1,9 @@
+# secrets
+.env*
+!.env.local.example
+.neon
+# deps / build
+node_modules/
+.next/
+# case data (CVs are never committed)
+data/

@@ -1,0 +1,117 @@
+{
+  "version": "1.0",
+  "company": "Kargo",
+  "pattern": "operator-turned-builder",
+  "scale": { "min": 0, "max": 4 },
+  "formula": "sum(weight * level / 4)",
+  "evidence_rule": "Every level above 0 must include an exact quote from the CV. No quote = 0.",
+  "weights": {
+    "PM":  { "A": 25, "B": 20, "C": 15, "D": 15, "E": 15, "F": 10 },
+    "SPM": { "A": 20, "B": 15, "C": 15, "D": 15, "E": 25, "F": 10 }
+  },
+  "criteria": {
+    "A": {
+      "name": "Operational proximity to freight",
+      "question": "Did they do logistics operations work with their own hands?",
+      "levels": {
+        "4": "2+ years in a hands-on ops role at a freight forwarder, CHA, NVOCC, port or 3PL (documentation, customs, carrier allocation, exception handling)",
+        "3": "Under 2 years hands-on ops, OR 2+ years as a PM/engineer embedded directly with forwarder ops teams",
+        "2": "Built or sold logistics software with regular direct contact with ops users",
+        "1": "Adjacent only: supply chain in e-commerce/manufacturing, or logistics APIs integrated from the outside",
+        "0": "No logistics exposure"
+      }
+    },
+    "B": {
+      "name": "Built the fix unasked",
+      "question": "Did they see a broken process and fix it without a mandate?",
+      "levels": {
+        "4": "Self-initiated a tool or process that others adopted, with scale stated",
+        "3": "Self-initiated, adopted by own team, scale not stated",
+        "2": "Improved something within an assigned remit",
+        "1": "Executed improvements designed by others",
+        "0": "No evidence"
+      }
+    },
+    "C": {
+      "name": "Ownership without a layer",
+      "question": "Did they own outcomes with nobody above or around to catch it?",
+      "levels": {
+        "4": "Sole owner of a product/area/book with nobody between them and the customer or outcome (e.g. sole PM, no layer, reports to CEO/founder)",
+        "3": "Owned a scope end to end with light oversight",
+        "2": "Owned features inside a larger team structure",
+        "1": "Supporting role",
+        "0": "No evidence"
+      },
+      "role_notes": {
+        "SPM": "Level 4 = sole or first PM at a company, or owned an area with no senior PM layer above, reporting to a founder/CEO"
+      }
+    },
+    "D": {
+      "name": "Judgment and learning loops",
+      "question": "Do they kill, post-mortem, and write down why?",
+      "levels": {
+        "4": "Killed or reversed their own work on evidence AND documented why (post-mortem, kill note)",
+        "3": "Wrote a post-mortem or root-cause analysis that changed team practice",
+        "2": "Data-informed decisions; no kill or loss documented",
+        "1": "Metrics mentioned, no decision shown",
+        "0": "No evidence"
+      }
+    },
+    "E": {
+      "name": "Product craft for the role",
+      "question": "Can they discover, prioritise and ship at the level this role needs?",
+      "levels_by_role": {
+        "PM": {
+          "4": "Owned a product area; shipped 3+ features with measured outcomes; runs discovery directly with users; has shipped and killed things",
+          "3": "Shipped with outcomes; discovery thin or indirect",
+          "2": "Translated user needs into specs or builds without a PM title",
+          "1": "Worked alongside product only",
+          "0": "No evidence"
+        },
+        "SPM": {
+          "4": "Owned an integration/platform/data layer (carrier systems, port portals, ERP, FMS, APIs); made build-vs-configure-vs-don't-touch calls; set up product practices others adopted",
+          "3": "Owned a complex product area with integrations, but not the platform layer or practice-setting",
+          "2": "Shipped features as a PM; limited platform or integration exposure",
+          "1": "Adjacent product work only",
+          "0": "No evidence"
+        }
+      }
+    },
+    "F": {
+      "name": "Composure in live operations",
+      "question": "Did they deliver in a real-time crisis?",
+      "levels": {
+        "4": "Named incident handled personally under time pressure with a clean outcome",
+        "3": "On-call, escalation or outage ownership with a stated outcome",
+        "2": "Worked in time-critical operations; no incident described",
+        "1": "Mentions pressure, no specifics",
+        "0": "No evidence"
+      }
+    }
+  },
+  "bands": [
+    { "min": 75, "max": 100, "label": "Strong pattern match", "suggestion": "Shortlist; review first" },
+    { "min": 55, "max": 74.99, "label": "Partial match", "suggestion": "Shortlist if no flags; probe A and B" },
+    { "min": 35, "max": 54.99, "label": "Spec match only", "suggestion": "Default suggestion: pass" },
+    { "min": 0, "max": 34.99, "label": "No match", "suggestion": "Default suggestion: pass" }
+  ],
+  "flags": {
+    "pattern_floor": "A == 0 and B == 0",
+    "spm_shipping_floor": "role == SPM and E <= 1",
+    "consider_for_pm": "role == SPM and spm_score < 55 and pm_score >= 75",
+    "experience_below_jd": "PM: < 2 yrs PM-type ownership; SPM: < 5 yrs. Info only, never a reject reason",
+    "parse_failed": "CV could not be read; route to Arjun unscored"
+  },
+  "jd_experience": { "PM": "2-4 years", "SPM": "5-8 years" },
+  "never_score": [
+    "college tier or brand",
+    "certifications",
+    "framework vocabulary",
+    "company brand or size",
+    "conference talks",
+    "CV design",
+    "career switches (never penalise)",
+    "name, gender, age, photo, address"
+  ],
+  "note": "No band or flag ever sends an email. Arjun's click is the only trigger."
+}
