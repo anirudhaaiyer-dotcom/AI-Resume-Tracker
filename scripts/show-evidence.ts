@@ -1,3 +1,4 @@
+// Usage: npx tsx scripts/show-evidence.ts <source_file> [...] — print levels + quotes for scored CVs
 import "./_env";
 import { sql } from "../lib/db";
 const rows = await sql`SELECT c.source_file, s.evidence, s.why_ranked_here FROM candidates c JOIN scores s ON s.candidate_id=c.id AND s.weighting='PM' WHERE c.source_file = ANY(${process.argv.slice(2)})`;

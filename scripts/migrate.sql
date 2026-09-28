@@ -62,3 +62,7 @@ CREATE TABLE IF NOT EXISTS emails (
 );
 
 CREATE INDEX IF NOT EXISTS scores_rank_idx ON scores (weighting, total DESC);
+
+-- 'sending' lets one click claim a draft atomically, so a double-click can't send twice.
+ALTER TABLE emails DROP CONSTRAINT IF EXISTS emails_status_check;
+ALTER TABLE emails ADD CONSTRAINT emails_status_check CHECK (status IN ('draft', 'sending', 'sent', 'failed'));

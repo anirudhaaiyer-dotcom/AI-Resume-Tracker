@@ -1,5 +1,5 @@
 // Score every CV in data/applications (sequential — Gemini free tier is rate-limited).
-// Already-scored files are skipped unless --rescore. Usage: npx tsx scripts/score-all.ts [--rescore] [--limit N]
+// Already-scored files are skipped unless --rescore. Usage: npx tsx scripts/score-all.ts [--rescore] [--limit N] [--only prefix1,prefix2]
 import "./_env";
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
@@ -11,7 +11,13 @@ const limitArg = process.argv.indexOf("--limit");
 const limit = limitArg > -1 ? Number(process.argv[limitArg + 1]) : Infinity;
 
 const dir = "data/applications";
-const files = readdirSync(dir).filter((f) => /\.(pdf|docx|txt)$/i.test(f)).sort().slice(0, limit);
+const onlyArg = process.argv.indexOf("--only");
+const only = onlyArg > -1 ? process.argv[onlyArg + 1].split(",") : null;
+const files = readdirSync(dir)
+  .filter((f) => /\.(pdf|docx|txt)$/i.test(f))
+  .filter((f) => !only || only.some((o) => f.startsWith(o)))
+  .sort()
+  .slice(0, limit);
 const tally = { scored: 0, skipped: 0, parse_failed: 0, error: 0 };
 
 for (const [i, file] of files.entries()) {

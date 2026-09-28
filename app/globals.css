@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f7f6f3;
+  --panel: #ffffff;
+  --ink: #1c1b19;
+  --muted: #6b6860;
+  --line: #e4e1da;
+  --accent: #1f5f4a;
+  --accent-ink: #ffffff;
+  --strong: #1f7a4d;
+  --partial: #a86a0b;
+  --spec: #8a5a9c;
+  --none: #8b8a86;
+  --danger: #b3261e;
+  --quote: #f1efe9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141412;
+    --panel: #1c1c1a;
+    --ink: #ecebe7;
+    --muted: #a09d95;
+    --line: #2e2d2a;
+    --accent: #5fb494;
+    --accent-ink: #0f1a15;
+    --strong: #5fcf93;
+    --partial: #e4a94a;
+    --spec: #c79ad8;
+    --none: #8f8e89;
+    --danger: #ff8a80;
+    --quote: #242421;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-strong: var(--strong);
+  --color-partial: var(--partial);
+  --color-spec: var(--spec);
+  --color-none: var(--none);
+  --color-danger: var(--danger);
+  --color-quote: var(--quote);
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-feature-settings: "tnum" 1;
+}
+
+textarea,
+input,
+select {
+  background: var(--panel);
+  color: var(--ink);
+}

@@ -7,3 +7,6 @@ node_modules/
 .next/
 # case data (CVs are never committed)
 data/
+.next/
+next-env.d.ts
+*.tsbuildinfo
