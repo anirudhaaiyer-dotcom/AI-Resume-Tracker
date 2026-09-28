@@ -1,6 +1,7 @@
 "use server";
 
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -91,7 +92,7 @@ export async function confirmRole(formData: FormData) {
   revalidatePath("/", "layout");
 }
 
-// Upload: saved into data/applications (gitignored), then parsed → redacted → scored.
+// Upload: saved (data/applications locally, temp dir on Vercel), then parsed → redacted → scored.
 export async function uploadCvs(formData: FormData) {
   const role = String(formData.get("role")) as Role;
   const files = formData.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
@@ -102,7 +103,10 @@ export async function uploadCvs(formData: FormData) {
       results.push({ file: name, status: "unsupported type" });
       continue;
     }
-    const path = join(process.cwd(), "data", "applications", name);
+    // Vercel's filesystem is read-only apart from the temp dir; locally keep CVs in data/ (git-ignored).
+    const dir = process.env.VERCEL ? join(tmpdir(), "cvs") : join(process.cwd(), "data", "applications");
+    await mkdir(dir, { recursive: true });
+    const path = join(dir, name);
     await writeFile(path, Buffer.from(await f.arrayBuffer()));
     try {
       const r = await ingest(path, { pool: "application", roleTag: role, rescore: true });

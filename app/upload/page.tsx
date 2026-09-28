@@ -2,6 +2,9 @@ import Link from "next/link";
 import { uploadCvs } from "@/app/actions";
 import { Submit } from "@/app/candidate/[id]/buttons";
 
+// Drafting / scoring calls Gemini and can take 20–60 s per CV.
+export const maxDuration = 300;
+
 export default async function UploadPage({ searchParams }: { searchParams: Promise<{ done?: string }> }) {
   const { done } = await searchParams;
   let results: { file: string; status: string; id?: number }[] = [];

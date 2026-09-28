@@ -6,6 +6,9 @@ import { candidate } from "@/lib/queries";
 import { CRITERIA, rubric, type Role } from "@/lib/rubric";
 import { Submit } from "./buttons";
 
+// Drafting / scoring calls Gemini and can take 20–60 s per CV.
+export const maxDuration = 300;
+
 const ROLE_NAME: Record<Role, string> = { PM: "Product Manager", SPM: "Senior PM" };
 
 export default async function CandidatePage({ params }: { params: Promise<{ id: string }> }) {

@@ -1,5 +1,4 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import rubricJson from "../rubric.json";
 
 export type Role = "PM" | "SPM";
 export type Criterion = "A" | "B" | "C" | "D" | "E" | "F";
@@ -9,9 +8,8 @@ export type Levels = Record<Criterion, number>;
 
 type Band = { min: number; max: number; label: string; suggestion: string };
 
-export const rubric = JSON.parse(
-  readFileSync(join(process.cwd(), "rubric.json"), "utf8"),
-) as {
+// Imported (not read from disk) so it is bundled into serverless deployments.
+export const rubric = rubricJson as unknown as {
   weights: Record<Role, Record<Criterion, number>>;
   criteria: Record<Criterion, any>;
   bands: Band[];
