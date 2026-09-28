@@ -155,7 +155,7 @@ Return JSON only, matching the schema. Do not compute totals.
 - Next.js (App Router) + TypeScript + Tailwind; local run first.
 - LLM: **Google Gemini free tier** (`@google/genai`); model from env `GEMINI_MODEL` (don't hardcode a model name). Free tier is rate-limited → score sequentially with backoff. Redaction (§4) happens before every call.
 - Resend for email (free tier). Persistence: **Neon Postgres** (project `rapid-resonance-82624800`, branch `production`, free plan) via `DATABASE_URL` in `.env.local` — replaces SQLite/Supabase.
-- **Free tier only, everywhere.** Never upgrade a plan or enable a paid feature. Neon AI Gateway needs a paid plan → not used. The Anthropic API is pay-per-call → confirm the LLM route with the user before any bulk scoring.
+- **Free tier only, except Gemini.** Neon, Resend, GitHub etc. stay on free plans — never upgrade or enable a paid feature (Neon AI Gateway needs paid → not used). **Gemini uses the user-approved paid key** (2026-09-28): Flash model only, skip already-scored CVs, ask before runs over ~70 calls.
 - `.env.local` (gitignored): `DATABASE_URL`, `GEMINI_API_KEY`, `GEMINI_MODEL`, `RESEND_API_KEY`, `RESEND_FROM`, `EMAIL_OVERRIDE_TO`.
 
 ### Email safety (important)
@@ -185,3 +185,13 @@ CV email addresses are fictional but could belong to real people. **All sends go
 4. Decision log exportable as CSV.
 5. Blind-scoring check: shortlist rates by college tier don't skew (report the numbers).
 6. README with setup and a 2-minute demo script.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
