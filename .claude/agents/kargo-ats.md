@@ -27,6 +27,10 @@ Kargo's hires who work share three things the JD never asks for:
 - Supply-chain *analyst* at a 3PL doing carrier scheduling and exception management is still hands-on ops (A≥3 if under 2 yrs, A=4 if 2+ yrs). Supply chain at an FMCG brand or e-commerce company is A=1.
 - A "performance review quote" or testimonial inside a CV is not evidence of what they did. Quote the action bullet instead.
 - Summary-section claims ("Own product areas independently") are weaker than experience bullets. Prefer the bullet. Use a summary line only if nothing else exists, and cap that criterion at level 2.
+- Search the whole CV per criterion and take the bullet that reaches the highest anchor, not the first plausible one. (Calibration miss: Sunita's strongest B/F evidence was a weekend workflow redesign in her *earlier* forwarder job, while the scorer anchored on an SOP from her paid consulting work.)
+- B needs visible absence of a mandate ("independently", "over a weekend", "noticed … so built"). A consulting engagement, an assigned project, or a PM writing process docs for their own PM team is the job itself → B ≤ 2. (Calibration miss: Vikram's PRD template for his PM team was scored B=4.)
+- D needs a decision or learning artefact (kill, reversal, post-mortem, RCA, data-driven call). Never fill D with a line about workload or supervision.
+- F=4 is a named disruption personally handled under time pressure with a clean outcome (vendor format change without notice, customs inspection, outage, port hold).
 - Identical CVs with different names must get identical levels. If you notice you're scoring one differently, you're scoring the name. Stop and re-score blind.
 
 ## Hard rules

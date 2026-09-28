@@ -155,7 +155,7 @@ Return JSON only, matching the schema. Do not compute totals.
 - Next.js (App Router) + TypeScript + Tailwind; local run first.
 - LLM: **Google Gemini free tier** (`@google/genai`); model from env `GEMINI_MODEL` (don't hardcode a model name). Free tier is rate-limited → score sequentially with backoff. Redaction (§4) happens before every call.
 - Resend for email (free tier). Persistence: **Neon Postgres** (project `rapid-resonance-82624800`, branch `production`, free plan) via `DATABASE_URL` in `.env.local` — replaces SQLite/Supabase.
-- **Free tier only, everywhere.** Never upgrade a plan or enable a paid feature. Neon AI Gateway needs a paid plan → not used. The Anthropic API is pay-per-call → confirm the LLM route with the user before any bulk scoring.
+- **Free tier only, except Gemini.** Neon, Resend, GitHub etc. stay on free plans — never upgrade or enable a paid feature (Neon AI Gateway needs paid → not used). **Gemini uses the user-approved paid key** (2026-09-28): Flash model only, skip already-scored CVs, ask before runs over ~70 calls.
 - `.env.local` (gitignored): `DATABASE_URL`, `GEMINI_API_KEY`, `GEMINI_MODEL`, `RESEND_API_KEY`, `RESEND_FROM`, `EMAIL_OVERRIDE_TO`.
 
 ### Email safety (important)

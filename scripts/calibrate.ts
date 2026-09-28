@@ -5,6 +5,7 @@ import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { sql } from "../lib/db";
 import { ingest } from "../lib/pipeline";
+import { usage } from "../lib/score";
 
 const EXPECTED: Record<string, { group: "Operator" | "Spec"; total: number }> = {
   "cv_07_lavanya_iyer.docx": { group: "Operator", total: 97.5 },
@@ -20,8 +21,14 @@ const EXPECTED: Record<string, { group: "Operator" | "Spec"; total: number }> = 
 const rescore = process.argv.includes("--rescore");
 const dir = "data/hires";
 for (const file of readdirSync(dir).filter((f) => f.endsWith(".docx")).sort()) {
-  const r = await ingest(join(dir, file), { pool: "hire", roleTag: "PM", rescore });
-  console.log(`${r.status.padEnd(12)} ${file}`);
+  try {
+    const r = await ingest(join(dir, file), { pool: "hire", roleTag: "PM", rescore });
+    console.log(`${r.status.padEnd(12)} ${file}`);
+  } catch (e: any) {
+    // Provider outage / rate limit: leave unscored, a re-run picks it up.
+    console.log(`${"error".padEnd(12)} ${file} — ${e?.status ?? ""} ${String(e?.message ?? e).slice(0, 120)}`);
+    if (/DAILY quota/.test(String(e?.message))) break;
+  }
 }
 
 const rows = await sql`SELECT c.source_file, s.levels, s.evidence, s.total::float AS total, s.band
@@ -42,3 +49,4 @@ for (const r of rows) {
   );
 }
 console.log(`\nCalibration: ${pass ? "PASS" : "FAIL"} (Operators ≥ 75, Spec < 55)`);
+console.log(`Gemini usage this run: ${usage.calls} calls, ${usage.input} input tokens, ${usage.output} output tokens (incl. thinking)`);
