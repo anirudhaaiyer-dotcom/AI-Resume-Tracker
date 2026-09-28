@@ -19,6 +19,8 @@ export async function parseCv(path: string): Promise<string> {
   } else {
     throw new Error(`Unsupported file type: ${ext}`);
   }
+  // Some PDFs carry NUL / control characters that Postgres rejects in TEXT columns.
+  text = text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
   if (text.replace(/\s/g, "").length < 200) throw new Error("Too little text extracted");
   return text;
 }
