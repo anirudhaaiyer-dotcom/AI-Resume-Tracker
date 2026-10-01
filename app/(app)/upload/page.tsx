@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { uploadCvs } from "@/app/actions";
-import { Submit } from "@/app/candidate/[id]/buttons";
+import { Submit } from "@/app/(app)/candidate/[id]/buttons";
 
 // Drafting / scoring calls Gemini and can take 20–60 s per CV.
 export const maxDuration = 300;
